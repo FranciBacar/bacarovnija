@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prijave — Bač.art admin</title>
+<link rel="icon" type="image/png" href="/assets/mark-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#F4ECDD;--card:#FBF7EE;--walnut:#241D16;--terra:#B4502B;--ink:#2E251C;--muted:#7A6B58}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Hanken Grotesk',sans-serif;background:var(--paper);color:var(--ink);font-size:15px}
+  header{background:var(--walnut);color:#F4ECDD;position:sticky;top:0;z-index:10}
+  .hin{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px}
+  .hin img{height:34px}
+  .hgroup{display:flex;align-items:center;gap:16px}
+  .stat{font-size:14px;color:#C9BBA4}
+  .stat b{font-family:'Bricolage Grotesque';color:#fff;font-size:18px}
+  .btn{font-family:inherit;cursor:pointer;border:none;border-radius:100px;font-weight:700;padding:9px 18px;font-size:14px}
+  .btn-out{background:transparent;border:1.5px solid rgba(244,236,221,.3);color:#F4ECDD}
+  .btn-out:hover{border-color:#D98A4E;color:#D98A4E}
+  main{max-width:1200px;margin:0 auto;padding:28px 24px 60px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px}
+  .toolbar h1{font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;margin-right:auto}
+  .filter{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{cursor:pointer;border:1px solid rgba(46,37,28,.18);background:#fff;border-radius:100px;padding:7px 14px;font-size:13.5px;font-weight:600;color:var(--muted)}
+  .chip.active{background:var(--walnut);color:#F4ECDD;border-color:var(--walnut)}
+  input.search{border:1px solid rgba(46,37,28,.18);border-radius:100px;padding:8px 16px;font-family:inherit;font-size:14px;min-width:200px}
+  .card{background:var(--card);border:1px solid rgba(46,37,28,.08);border-radius:16px;overflow:hidden;box-shadow:0 8px 22px rgba(36,29,22,.05)}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:13px 16px;font-size:14px;border-bottom:1px solid rgba(46,37,28,.08);vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:#F1E7D4;position:sticky;top:62px}
+  tr:last-child td{border-bottom:none}
+  .nm{font-weight:700;color:var(--walnut)}
+  .sub{color:var(--muted);font-size:12.5px}
+  a{color:var(--terra);text-decoration:none}
+  a:hover{text-decoration:underline}
+  select.status{font-family:inherit;font-size:13px;padding:6px 8px;border-radius:8px;border:1px solid rgba(46,37,28,.2);background:#fff;font-weight:600}
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:100px}
+  .s-nova{background:#fde9d6;color:#9b4a18}
+  .s-kontaktiran{background:#e2e8d6;color:#566b34}
+  .s-potrjena{background:#d6ead9;color:#2f6b3a}
+  .s-preklicana{background:#eee;color:#888}
+  .del{cursor:pointer;color:#b33;font-size:13px;border:none;background:none;font-family:inherit}
+  .empty{padding:60px 20px;text-align:center;color:var(--muted)}
+  .msgtext{max-width:280px;white-space:pre-wrap;color:#5A4C3D}
+  @media(max-width:760px){th:nth-child(6),td:nth-child(6){display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hin">
+    <img src="/assets/logo-cream.png" alt="Bač.art">
+    <div class="hgroup">
+      <span class="stat"><b id="total">0</b> prijav</span>
+      <a href="/" class="btn btn-out" style="text-decoration:none">↗ Spletna stran</a>
+      <form method="POST" action="/admin/logout" style="margin:0"><button class="btn btn-out">Odjava</button></form>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="toolbar">
+    <h1>Prijave na delavnice</h1>
+    <input class="search" id="search" placeholder="Išči po imenu, e-pošti ...">
+    <div class="filter" id="filter">
+      <span class="chip active" data-f="vse">Vse</span>
+      <span class="chip" data-f="nova">Nove</span>
+      <span class="chip" data-f="kontaktiran">Kontaktirani</span>
+      <span class="chip" data-f="potrjena">Potrjene</span>
+      <span class="chip" data-f="preklicana">Preklicane</span>
+    </div>
+  </div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Datum</th><th>Ime</th><th>Kontakt</th><th>Termin</th><th>Osebe</th><th>Sporočilo</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none">Še ni prijav.</div>
+  </div>
+</main>
+<script>
+  var ALL = [];
+  var filter = 'vse';
+  var STAT = {nova:'Nova', kontaktiran:'Kontaktiran', potrjena:'Potrjena', preklicana:'Preklicana'};
+
+  function fmtDate(iso){ var d=new Date(iso); return d.toLocaleDateString('sl-SI')+' '+d.toLocaleTimeString('sl-SI',{hour:'2-digit',minute:'2-digit'}); }
+  function esc(s){ return String(s==null?'':s).replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}); }
+
+  function render(){
+    var q = document.getElementById('search').value.toLowerCase().trim();
+    var rows = ALL.filter(function(r){
+      if(filter!=='vse' && r.status!==filter) return false;
+      if(q && !((r.ime||'')+' '+(r.email||'')+' '+(r.telefon||'')+' '+(r.termin||'')).toLowerCase().includes(q)) return false;
+      return true;
+    });
+    document.getElementById('total').textContent = ALL.length;
+    var tb = document.getElementById('rows');
+    document.getElementById('empty').style.display = rows.length?'none':'block';
+    tb.innerHTML = rows.map(function(r){
+      var opts = Object.keys(STAT).map(function(k){return '<option value="'+k+'"'+(k===r.status?' selected':'')+'>'+STAT[k]+'</option>';}).join('');
+      var osebe = r.udelezenci + (r.spremljevalci>0?(' + '+r.spremljevalci+' spr.'):'');
+      return '<tr>'+
+        '<td class="sub">'+fmtDate(r.created_at)+'</td>'+
+        '<td><div class="nm">'+esc(r.ime)+'</div></td>'+
+        '<td><a href="mailto:'+esc(r.email)+'">'+esc(r.email)+'</a><div class="sub"><a href="tel:'+esc(r.telefon)+'">'+esc(r.telefon)+'</a></div></td>'+
+        '<td>'+esc(r.termin)+'</td>'+
+        '<td>'+esc(osebe)+'</td>'+
+        '<td class="msgtext">'+esc(r.sporocilo||'—')+'</td>'+
+        '<td><span class="badge s-'+r.status+'">'+STAT[r.status]+'</span><br><select class="status" data-id="'+r.id+'" style="margin-top:6px">'+opts+'</select></td>'+
+        '<td><button class="del" data-id="'+r.id+'">izbriši</button></td>'+
+      '</tr>';
+    }).join('');
+  }
+
+  function load(){
+    fetch('/api/registrations').then(function(r){
+      if(r.status===401){location.href='/admin/login';return null;}
+      return r.json();
+    }).then(function(j){ if(j){ALL=j.rows||[];render();} });
+  }
+
+  document.getElementById('search').addEventListener('input', render);
+  document.getElementById('filter').addEventListener('click', function(e){
+    if(!e.target.classList.contains('chip')) return;
+    document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');});
+    e.target.classList.add('active'); filter = e.target.dataset.f; render();
+  });
+  document.getElementById('rows').addEventListener('change', function(e){
+    if(e.target.classList.contains('status')){
+      var id=e.target.dataset.id, status=e.target.value;
+      fetch('/api/registrations/'+id+'/status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:status})})
+        .then(function(){ var row=ALL.find(function(x){return x.id==id;}); if(row)row.status=status; render(); });
+    }
+  });
+  document.getElementById('rows').addEventListener('click', function(e){
+    if(e.target.classList.contains('del')){
+      if(!confirm('Izbrišem to prijavo?')) return;
+      var id=e.target.dataset.id;
+      fetch('/api/registrations/'+id+'/delete',{method:'POST'}).then(function(){ ALL=ALL.filter(function(x){return x.id!=id;}); render(); });
+    }
+  });
+  load();
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prijava — Bač.art admin</title>
+<link rel="icon" type="image/png" href="/assets/mark-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Hanken Grotesk',sans-serif;background:#241D16;color:#F4ECDD;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .box{background:#2E2419;border:1px solid rgba(244,236,221,.1);border-radius:22px;padding:40px 34px;width:100%;max-width:380px;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+  .logo{height:42px;margin-bottom:22px}
+  h1{font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;margin-bottom:6px}
+  p.sub{color:#C9BBA4;font-size:14.5px;margin-bottom:24px}
+  label{display:block;font-size:13px;font-weight:700;color:#C9BBA4;margin:14px 0 6px}
+  input{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid rgba(244,236,221,.18);background:#1A140E;color:#F4ECDD;font-size:15.5px;font-family:inherit}
+  input:focus{outline:none;border-color:#B4502B}
+  button{width:100%;margin-top:22px;padding:14px;border:none;border-radius:100px;background:#B4502B;color:#F7EFE0;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer;transition:background .2s}
+  button:hover{background:#c95c33}
+  .err{background:rgba(180,80,43,.18);border:1px solid rgba(180,80,43,.5);color:#F6DECB;padding:11px 14px;border-radius:12px;font-size:14px;margin-bottom:18px}
+  a.back{display:block;text-align:center;margin-top:18px;color:#9C8C76;font-size:13.5px;text-decoration:none}
+  a.back:hover{color:#D98A4E}
+</style>
+</head>
+<body>
+  <form class="box" method="POST" action="/admin/login">
+    <img class="logo" src="/assets/logo-cream.png" alt="Bač.art">
+    <h1>Admin prijava</h1>
+    <p class="sub">Pregled prijav na delavnice</p>
+    <div id="errBox" class="err" style="display:none">Napačno uporabniško ime ali geslo.</div>
+    <label for="username">Uporabniško ime</label>
+    <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+    <label for="password">Geslo</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required>
+    <button type="submit">Prijava</button>
+    <a class="back" href="/">← Nazaj na spletno stran</a>
+  </form>
+  <script>
+    if (new URLSearchParams(location.search).has('err')) {
+      document.getElementById('errBox').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

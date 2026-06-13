@@ -1,0 +1,37 @@
+# Render.com konfiguracija za Bač.art delavnice.
+# Ob povezavi repozitorija Render samodejno prebere te nastavitve.
+services:
+  - type: web
+    name: bacart-delavnice
+    runtime: node
+    plan: free            # brezplačen začetek (zaspi ob neaktivnosti; prvi obisk ~30s)
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true   # Render samodejno generira varen niz
+      - key: ADMIN_USER
+        sync: false           # vneseš v Render nadzorni plošči
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: NOTIFY_EMAIL
+        sync: false
+
+# OPOMBA o trajnem shranjevanju prijav:
+# Brezplačni plan nima trajnega diska — datoteka s prijavami (data/registrations.json)
+# se ob vsaki novi objavi/zagonu ponastavi. KER pa se vsaka prijava hkrati pošlje na e-pošto,
+# je e-pošta zanesljiva kopija vseh prijav.
+# Za trajno bazo v adminu nadgradi na plačljiv plan in dodaj Disk:
+#   plan: starter
+#   disk:
+#     name: data
+#     mountPath: /data
+#     sizeGB: 1
+# ter dodaj envVar:  DB_PATH = /data/registrations.json
