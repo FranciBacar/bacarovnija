@@ -36,6 +36,7 @@ app.post('/api/register', async (req, res) => {
     const b = req.body || {};
     // honeypot: boti izpolnijo skrito polje "website" — tiho zavrnemo (brez shranjevanja/e-pošte)
     if (b.website) return res.json({ ok: true });
+    if (!b.soglasje) return res.status(400).json({ error: 'Za prijavo je potrebno strinjanje s pogoji in politiko zasebnosti.' });
     const r = {
       termin: (b.termin || '').toString().trim(),
       ime: (b.ime || '').toString().trim(),

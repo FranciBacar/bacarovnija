@@ -200,6 +200,9 @@
   .rform .submit{background:var(--walnut);color:var(--cream);font-size:17px;padding:15px;margin-top:4px}
   .rform .submit:hover{background:#332819}
   .form-note{font-size:12.5px;color:#F6DECB;opacity:.85;margin-top:2px}
+  .rform .consent{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:#FFF1E4;line-height:1.45;cursor:pointer;margin-top:2px}
+  .rform .consent input{width:auto;margin:2px 0 0;flex:0 0 auto;accent-color:#241D16}
+  .rform .consent a{color:#FFF1E4;text-decoration:underline}
   .form-msg{display:none;padding:16px;border-radius:14px;background:rgba(255,246,236,.96);color:var(--ink);font-size:15.5px;margin-top:8px}
   .form-msg.show{display:block}
   .form-msg.err{background:#fff;color:#9b2c12}
@@ -478,6 +481,7 @@
             <textarea id="sporocilo" name="sporocilo" placeholder="Popusti, posebne želje, vprašanja ..."></textarea>
           </div>
           <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0">
+          <label class="consent"><input type="checkbox" name="soglasje" required> Strinjam se s <a href="/pogoji.html" target="_blank" rel="noopener">pogoji prijave</a> in <a href="/zasebnost.html" target="_blank" rel="noopener">politiko zasebnosti</a>.</label>
           <button type="submit" class="btn submit">Pošlji prijavo</button>
           <p class="form-note">S prijavo se strinjaš, da te kontaktiramo glede delavnice. Več o obdelavi podatkov v <a href="/zasebnost.html" style="color:#FFF1E4;text-decoration:underline">politiki zasebnosti</a>.</p>
         </form>
@@ -519,7 +523,7 @@
     </div>
     <div class="foot-bottom">
       <span>© <span id="year"></span> Bač.art — Blaž Bačar · Kreativne delavnice 2026</span>
-      <span><a href="/zasebnost.html">Politika zasebnosti</a> · <a href="#" id="cookieManage">Nastavitve piškotkov</a></span>
+      <span><a href="/pogoji.html">Pogoji prijave</a> · <a href="/zasebnost.html">Politika zasebnosti</a> · <a href="#" id="cookieManage">Nastavitve piškotkov</a></span>
     </div>
   </div>
 </footer>
