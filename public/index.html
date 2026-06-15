@@ -126,7 +126,17 @@
 
   /* gallery */
   .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(12px,1.6vw,18px)}
-  .gallery img{width:100%;height:clamp(220px,24vw,300px);object-fit:cover;border-radius:14px;background:var(--card-dark)}
+  .gphoto{position:relative;margin:0;border-radius:14px;overflow:hidden}
+  .gphoto img{width:100%;height:clamp(220px,24vw,300px);object-fit:cover;display:block;background:var(--card-dark)}
+  .gphoto figcaption{position:absolute;left:0;right:0;bottom:0;padding:20px 12px 8px;font-size:11px;line-height:1.3;color:#EAE0CE;background:linear-gradient(transparent,rgba(20,16,11,.82))}
+  .ilink{color:var(--terra);text-decoration:underline;text-underline-offset:2px;font-weight:600}
+  .ilink:hover{color:#8f3d20}
+  .schedule{list-style:none;margin:8px 0 0;padding:0}
+  .schedule li{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid rgba(46,37,28,.09);font-size:15.5px;color:var(--ink-soft)}
+  .schedule li:last-child{border-bottom:none}
+  .schedule .t{font-family:'Bricolage Grotesque';font-weight:700;color:var(--terra);min-width:74px;flex:0 0 auto}
+  .mobile-note{margin-top:clamp(16px,2vw,22px);background:var(--card-cream);border:1px solid rgba(180,80,43,.2);border-radius:16px;padding:18px 22px;font-size:16px;color:var(--ink);display:flex;gap:12px;align-items:flex-start}
+  .mobile-note b{color:var(--terra)}
 
   /* offer */
   .offer-head{text-align:center;margin-bottom:clamp(36px,4vw,56px)}
@@ -274,12 +284,12 @@
     <div class="sec-head mt-head reveal">
       <span class="eyebrow eyebrow-line">Rešitev</span>
       <h2>En dan. Pravo orodje. Tvoj izdelek.</h2>
-      <p>Na posestvu Bačarovnija te mentor <b>Blaž Bačar</b> popelje skozi osnovne tehnike — od prve skice do izdelka, ki ga odneseš domov. Izbiraš med tremi mediji ustvarjanja.</p>
+      <p>Na <a class="ilink" href="https://maps.app.goo.gl/1t1NzFoYU9HdyuC99" target="_blank" rel="noopener">posestvu Bačarovnija</a> te mentor <b>Blaž Bačar</b> popelje skozi osnovne tehnike — od prve skice do izdelka, ki ga odneseš domov. Izbiraš med tremi mediji ustvarjanja.</p>
     </div>
     <div class="grid-auto cols-3">
-      <div class="pcard reveal"><div class="idx">01</div><h3>Rezbarstvo</h3><p>Z dletom in kladivom v les vrežeš svojo prvo formo. Mentor pomaga s skico in idejo — od grobega odvzemanja do detajla.</p></div>
-      <div class="pcard reveal"><div class="idx">02</div><h3>Obdelava lesa</h3><p>Spoznaš osnovne tehnike obdelave lesa — od grobe forme do gladke, dovršene površine, pripravljene za dom ali razstavo.</p></div>
-      <div class="pcard reveal"><div class="idx">03</div><h3>Slikarstvo</h3><p>Barva, poteza in kompozicija. Ustvariš svojo sliko ali se preizkusiš v večji stenski poslikavi pod vodstvom mentorja.</p></div>
+      <div class="pcard reveal"><div class="idx">01</div><h3>Rezbarstvo</h3><p>Z dletom, kladivom in posebnimi rezbarskimi noži v les vrežeš svojo prvo formo. Mentor pomaga s skico in idejo — od grobega odvzemanja do detajla.</p></div>
+      <div class="pcard reveal"><div class="idx">02</div><h3>Obdelava lesa</h3><p>Spoznaš osnovne tehnike ročne in strojne obdelave lesa — od grobe forme do gladke, dovršene površine, pripravljene za dom ali razstavo.</p></div>
+      <div class="pcard reveal"><div class="idx">03</div><h3>Slikarstvo</h3><p>Barva, poteza in kompozicija. Svojo sliko ustvariš na platno — tihožitje, pokrajino ali kaj povsem abstraktnega, pod vodstvom mentorja.</p></div>
     </div>
   </div>
 </section>
@@ -292,11 +302,11 @@
       <h2>Zakaj boš odšel zadovoljen</h2>
     </div>
     <div class="grid-auto cols-bene">
-      <div class="bcard reveal"><div class="badge">1</div><h3>Prideš praznih rok, odideš z izdelkom</h3><p>Vsi materiali in vse orodje so vključeni. Ničesar ni treba prinesti — razen dobre volje.</p></div>
+      <div class="bcard reveal"><div class="badge">1</div><h3>Prideš praznih rok, odideš z izdelkom</h3><p>Vsi materiali in vse orodje so vključeni. Ničesar ni treba prinesti — razen dobre volje in oblek, ki jih ni škoda za delo.</p></div>
       <div class="bcard reveal"><div class="badge">2</div><h3>Uspeš, tudi če še nikoli nisi prijel dleta</h3><p>Predznanje ni potrebno. Mentor ti pomaga s skico, idejo in obdelavo forme, korak za korakom.</p></div>
-      <div class="bcard reveal"><div class="badge">3</div><h3>Odklop in mir, ne le tečaj</h3><p>Posestvo Bačarovnija leži sredi narave. Pravo okolje, da se za en dan ustaviš in zadihaš.</p></div>
-      <div class="bcard reveal"><div class="badge">4</div><h3>Cel doživetni dan, ne hitra ura</h3><p>Domača hrana, pijača in sproščeno vzdušje od 9.00 do cca. 15.00 — ustvarjanje brez naglice.</p></div>
-      <div class="bcard reveal"><div class="badge">5</div><h3>Prideš z otrokom, partnerjem ali prijatelji</h3><p>Delavnice so za vse generacije. Lep skupen dan z ljudmi, ki so ti pri srcu.</p></div>
+      <div class="bcard reveal"><div class="badge">3</div><h3>Odklop in mir, ne le tečaj</h3><p>Posestvo Bačarovnija leži sredi navdihujoče narave. Pravo okolje, da se za en dan ustaviš in zadihaš.</p></div>
+      <div class="bcard reveal"><div class="badge">4</div><h3>Cel doživetni dan, ne hitra ura</h3><p>Sveža domača hrana, pijača in sproščeno vzdušje od 9.00 do cca. 15.00 — ustvarjanje brez naglice.</p></div>
+      <div class="bcard reveal"><div class="badge">5</div><h3>Prideš z otrokom, partnerjem ali prijatelji</h3><p>Delavnice so za vse generacije — kakovostno preživet skupni čas. Mogoče je tudi sodelovanje pri skupnem izdelku.</p></div>
     </div>
   </div>
 </section>
@@ -309,9 +319,9 @@
       <h2>Ustvarjali so pred tabo</h2>
     </div>
     <div class="grid-auto cols-3t">
-      <div class="tcard reveal"><span class="pill">primer</span><div class="quote-glyph">”</div><p class="q">Prišla sem brez vsakega znanja in domov odnesla skledo, ki je danes na naši mizi. Dan, ki me je popolnoma umiril.</p><div class="tperson"><div class="tphoto">MN</div><div><div class="nm">Ime Priimek</div><div class="rl">udeleženka delavnice</div></div></div></div>
-      <div class="tcard reveal"><span class="pill">primer</span><div class="quote-glyph">”</div><p class="q">Najlepše je bilo gledati, kako iz kosa lesa nastane forma. Blaž zna razložiti vsako potezo — in hrana je bila odlična.</p><div class="tperson"><div class="tphoto">JK</div><div><div class="nm">Ime Priimek</div><div class="rl">udeleženec delavnice</div></div></div></div>
-      <div class="tcard reveal"><span class="pill">primer</span><div class="quote-glyph">”</div><p class="q">Šla sva s sinom in oba ustvarila vsak svoj izdelek. Topel, pristen dan v naravi, ki ga bova zagotovo ponovila.</p><div class="tperson"><div class="tphoto">AP</div><div><div class="nm">Ime Priimek</div><div class="rl">udeleženka delavnice</div></div></div></div>
+      <div class="tcard reveal"><div class="quote-glyph">”</div><p class="q">Blaževe delavnice so vedno bogate z znanjem, ustvarjalnostjo in dobro družbo. Zelo zadovoljni smo z unikatno masivno gugalnico, ki smo jo izdelali lani — letos se lotevamo kosa pohištva. Idejo in željo imamo, Blaž pa znanje, orodje in material. Komaj čakamo!</p><div class="tperson"><div class="tphoto">VJ</div><div><div class="nm">Vida Janc</div><div class="rl">udeleženka delavnic</div></div></div></div>
+      <div class="tcard reveal"><div class="quote-glyph">”</div><p class="q">Najlepše je bilo gledati, kako iz kosa lesa nastane forma. Blaž zna razložiti vsako potezo — in hrana je bila odlična.</p><div class="tperson"><div class="tphoto">PB</div><div><div class="nm">Peter B.</div><div class="rl">udeleženec delavnice</div></div></div></div>
+      <div class="tcard reveal"><div class="quote-glyph">”</div><p class="q">Šla sva s sinom in oba ustvarila vsak svoj izdelek. Topel, pristen dan v naravi, ki ga bova zagotovo ponovila.</p><div class="tperson"><div class="tphoto">MB</div><div><div class="nm">Mateja B.</div><div class="rl">udeleženka delavnice</div></div></div></div>
     </div>
   </div>
 </section>
@@ -322,17 +332,17 @@
     <div class="sec-head on-dark mt-head reveal">
       <span class="eyebrow eyebrow-line">Galerija mojstrovin</span>
       <h2>Dokaz mojstrstva</h2>
-      <p>Stvaritve, totemi in skulpture Blaža Bačarja ter utrinki s preteklih delavnic.</p>
+      <p>Stvaritve, totemi in skulpture Blaža Bačarja ter utrinki s preteklih delavnic v okviru projekta <strong>Smoties</strong> na Domačiji pr’ Lenart (Urbanistični inštitut).</p>
     </div>
     <div class="gallery reveal">
-      <img src="foto/713288876_122213591384352123_8457791000479164378_n.jpg" alt="Lesena skulptura Bač.art" loading="lazy">
-      <img src="foto/713823877_122213591120352123_752908150155068502_n.jpg" alt="Rezbarjenje v lesu" loading="lazy">
-      <img src="foto/715040775_122213592188352123_5762093404084089523_n.jpg" alt="Delo na delavnici" loading="lazy">
-      <img src="foto/715450592_122213591750352123_1764701580873488998_n.jpg" alt="Lesena mojstrovina" loading="lazy">
-      <img src="foto/713444077_122213592524352123_235237402510534363_n.jpg" alt="Totem iz lesa" loading="lazy">
-      <img src="foto/712706884_122213591300352123_6774609330707190076_n.jpg" alt="Skulptura Blaža Bačarja" loading="lazy">
-      <img src="foto/716150362_122213592776352123_2940448229880812760_n.jpg" alt="Rezbarska stvaritev" loading="lazy">
-      <img src="foto/473352316_122146306190352123_4811899118395155950_n.jpg" alt="Utrinek z delavnice Bač.art" loading="lazy">
+      <figure class="gphoto"><img src="foto/izdelek-1.jpg" alt="Lesena skulptura Bač.art" loading="lazy"><figcaption>Foto: Bač.art</figcaption></figure>
+      <figure class="gphoto"><img src="foto/delavnica-niksic-1.jpg" alt="Utrinek z delavnice" loading="lazy"><figcaption>Foto: Matej Niksič · Projekt Smoties, Domačija pr’ Lenart</figcaption></figure>
+      <figure class="gphoto"><img src="foto/izdelek-2.jpg" alt="Rezbarska stvaritev" loading="lazy"><figcaption>Foto: Bač.art</figcaption></figure>
+      <figure class="gphoto"><img src="foto/delavnica-gorsic.jpg" alt="Delo na delavnici" loading="lazy"><figcaption>Foto: Nina Goršič · Projekt Smoties, Domačija pr’ Lenart</figcaption></figure>
+      <figure class="gphoto"><img src="foto/izdelek-3.jpg" alt="Kip iz lesa" loading="lazy"><figcaption>Foto: Bač.art</figcaption></figure>
+      <figure class="gphoto"><img src="foto/delavnica-sfiligoj.jpg" alt="Ustvarjanje na delavnici" loading="lazy"><figcaption>Foto: Mojca Šfiligoj · Projekt Smoties, Domačija pr’ Lenart</figcaption></figure>
+      <figure class="gphoto"><img src="foto/izdelek-4.jpg" alt="Lesena mojstrovina" loading="lazy"><figcaption>Foto: Bač.art</figcaption></figure>
+      <figure class="gphoto"><img src="foto/delavnica-niksic-2.jpg" alt="Delavnica obdelave lesa" loading="lazy"><figcaption>Foto: Matej Niksič · Projekt Smoties, Domačija pr’ Lenart</figcaption></figure>
     </div>
   </div>
 </section>
@@ -348,8 +358,8 @@
       <div class="incl-card reveal">
         <h3>Vključeno v ceno</h3>
         <div class="incl-row"><span class="check">✓</span>Strokovno vodenje in mentorstvo Blaža Bačarja</div>
-        <div class="incl-row"><span class="check">✓</span>Vsi materiali — les, barve in ostalo</div>
-        <div class="incl-row"><span class="check">✓</span>Vse orodje — dleta, kladiva, čopiči</div>
+        <div class="incl-row"><span class="check">✓</span>Vsi materiali — les, barve, platna in ostalo</div>
+        <div class="incl-row"><span class="check">✓</span>Vse orodje — ročno in strojno (dleta, kladiva, čopiči)</div>
         <div class="incl-row"><span class="check">✓</span>Domača hrana in pijača čez cel dan</div>
         <div class="incl-row"><span class="check">✓</span>Tvoj izdelek, ki ga odneseš domov</div>
         <div class="incl-row"><span class="check">✓</span>Doživetje sredi narave na posestvu Bačarovnija</div>
@@ -370,10 +380,13 @@
       </div>
       <div>
         <div class="gitem"><span>Šolarji, študenti, upokojenci</span><b>−25 %</b></div>
+        <div class="gitem"><span>Skupine nad 10 udeležencev</span><b>−25 % za vse</b></div>
         <div class="gitem"><span>Spremljevalci (samo hrana)</span><b>15 €</b></div>
         <div class="gitem"><span>Socialno šibkejši</span><b>brezplačno / po dogovoru</b></div>
       </div>
     </div>
+
+    <div class="mobile-note reveal"><span>📍</span><span><b>Delavnica je mobilna.</b> Za skupine nad 6 udeležencev lahko pridem kamorkoli na teren — domov, v šolo, podjetje ali na vaš dogodek. Pišite mi za ponudbo po meri.</span></div>
 
     <!-- TERMINI -->
     <div id="termini" class="termini">
@@ -402,11 +415,13 @@
       <h2>Še zadnji pomisleki?</h2>
     </div>
     <div class="faq-card reveal">
-      <details><summary>Nimam nobenih izkušenj — ali zmorem?<span class="faqicon">+</span></summary><p>Da. Predznanje ni potrebno. Mentor te vodi od prve skice do končnega izdelka in ti pomaga pri vsakem koraku obdelave forme.</p></details>
+      <details><summary>Nimam nobenih izkušenj — ali zmorem?<span class="faqicon">+</span></summary><p>Da. Predznanje ni potrebno. Mentor te vodi od prve skice do končnega izdelka in ti pomaga pri vsakem koraku obdelave forme. Za posvet in dodatne usmeritve smo ti na voljo tudi po telefonu ali e-pošti.</p></details>
       <details><summary>Je primerno za otroke?<span class="faqicon">+</span></summary><p>Vabljene so vse generacije — otroci, mladi in stari. Mlajši od 12 let so na delavnici v spremstvu odraslega.</p></details>
-      <details><summary>Kako pridem do lokacije?<span class="faqicon">+</span></summary><p>Do posestva Bačarovnija (Trnovec 10, 1215 Medvode) vodijo prijetne sprehajalne poti. Po potrebi je organiziran prevoz — samo javi se.</p></details>
-      <details><summary>Kaj moram prinesti?<span class="faqicon">+</span></summary><p>Nič. Vsi materiali, vse orodje ter hrana in pijača so vključeni v ceno. Prineseš le dobro voljo in udobna oblačila.</p></details>
-      <details><summary>Kako poteka dan?<span class="faqicon">+</span></summary><p>Delavnice potekajo v soboto, od 9.00 do cca. 15.00. Dan teče v sproščenem tempu — z odmori za hrano, pijačo in klepet.</p></details>
+      <details><summary>Kako pridem do lokacije?<span class="faqicon">+</span></summary><p>Zbor udeležencev je med 8.15 in 8.30 na brezplačnem <a class="ilink" href="https://maps.app.goo.gl/US8P7HSiz4nLK72m6" target="_blank" rel="noopener">parkirišču (izhodišče)</a>, od koder sledi prijeten voden sprehod skozi gozd do posestva (cca. 25 min). Lokacija: <a class="ilink" href="https://maps.app.goo.gl/1t1NzFoYU9HdyuC99" target="_blank" rel="noopener">Bačarovnija, Trnovec 10, 1215 Medvode</a>. Po potrebi je možen tudi prevoz — samo javi se.</p></details>
+      <details><summary>Kaj moram prinesti?<span class="faqicon">+</span></summary><p>Nič posebnega. Vsi materiali, vse orodje ter hrana in pijača so vključeni v ceno. Prineseš le dobro voljo, udobna oblačila in rezervna oblačila za delo z barvami.</p></details>
+      <details><summary>Kako poteka dan?<span class="faqicon">+</span></summary><p>Dan teče v sproščenem tempu, z odmori za hrano in klepet:</p><ul class="schedule"><li><span class="t">8.15–8.30</span><span>Zbor na parkirišču, nato voden sprehod skozi gozd do posestva (cca. 25 min).</span></li><li><span class="t">9.00</span><span>Kava, sok, čaj in domači prigrizki ob kratkem uvodu in osnovni teoriji (cca. 30 min).</span></li><li><span class="t">9.35</span><span>Začnemo s praktičnim delom — skice, obdelava forme …</span></li><li><span class="t">12.30</span><span>Kosilo in krajši odmor.</span></li><li><span class="t">13.15</span><span>Nadaljujemo z delom.</span></li><li><span class="t">~15.00</span><span>Zaključek — prekomentiramo izdelke in se poslovimo ob popoldanski malici.</span></li><li><span class="t">po želji</span><span>Po potrebi nadaljujemo z delom do cca. 16.00.</span></li></ul></details>
+      <details><summary>Kako je poskrbljeno za varnost?<span class="faqicon">+</span></summary><p>Poskrbljeno je za varnost pri delu in za prvo pomoč v primeru nezgod. Mentor te seznani s pravilno in varno uporabo orodja.</p></details>
+      <details><summary>Kaj pa v primeru slabega vremena?<span class="faqicon">+</span></summary><p>Delavnica se izvede v vsakem vremenu — na lokaciji je dovolj pokritih površin. V primeru slabega vremena ali drugih višjih sil se po želji lahko dogovorimo za nadomestni termin.</p></details>
     </div>
   </div>
 </section>
@@ -457,7 +472,8 @@
       <div class="contact-cards">
         <a class="ccard" href="mailto:bacarovnija@gmail.com"><div class="ct">E-pošta</div><div class="cv">bacarovnija@gmail.com</div></a>
         <a class="ccard" href="tel:+38631844736"><div class="ct">Telefon · Blaž Bačar</div><div class="cv">031 844 736</div></a>
-        <a class="ccard" href="https://www.google.com/maps/search/?api=1&query=Trnovec+10%2C+1215+Medvode" target="_blank" rel="noopener"><div class="ct">Lokacija · Bačarovnija</div><div class="cv">Trnovec 10, 1215 Medvode</div></a>
+        <a class="ccard" href="https://maps.app.goo.gl/1t1NzFoYU9HdyuC99" target="_blank" rel="noopener"><div class="ct">Lokacija · Bačarovnija</div><div class="cv">Trnovec 10, 1215 Medvode</div></a>
+        <a class="ccard" href="https://maps.app.goo.gl/US8P7HSiz4nLK72m6" target="_blank" rel="noopener"><div class="ct">Parkirišče · izhodišče za sprehod</div><div class="cv">Zbor ob 8.15–8.30</div></a>
       </div>
     </div>
   </div>
