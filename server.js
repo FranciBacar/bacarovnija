@@ -34,6 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.post('/api/register', async (req, res) => {
   try {
     const b = req.body || {};
+    // honeypot: boti izpolnijo skrito polje "website" — tiho zavrnemo (brez shranjevanja/e-pošte)
+    if (b.website) return res.json({ ok: true });
     const r = {
       termin: (b.termin || '').toString().trim(),
       ime: (b.ime || '').toString().trim(),

@@ -221,6 +221,19 @@
   @media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.rform .two{grid-template-columns:1fr}}
   @media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
   [id]{scroll-margin-top:84px}
+  /* cookie consent */
+  .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:300;max-width:540px;margin:0 auto;background:var(--walnut);color:var(--cream);border:1px solid rgba(244,236,221,.14);border-radius:18px;padding:20px 22px;box-shadow:0 20px 50px rgba(0,0,0,.4);display:none}
+  .cookie-banner.show{display:block}
+  .cookie-banner p{font-size:14.5px;line-height:1.55;color:var(--cream-muted);margin:0 0 14px}
+  .cookie-banner a{color:var(--orange);text-decoration:underline}
+  .cookie-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .cookie-actions button{font-family:'Hanken Grotesk',sans-serif;cursor:pointer;border:none;border-radius:100px;font-weight:700;font-size:14px;padding:10px 22px}
+  .cookie-accept{background:var(--terra);color:var(--cream-soft)}
+  .cookie-accept:hover{background:#c95c33}
+  .cookie-reject{background:transparent;color:var(--cream);border:1px solid rgba(244,236,221,.32)}
+  .cookie-reject:hover{border-color:var(--cream)}
+  .foot-bottom a{color:var(--cream-muted);text-decoration:underline}
+  .foot-bottom a:hover{color:var(--orange)}
 </style>
 </head>
 <body>
@@ -464,8 +477,9 @@
             <label for="sporocilo">Sporočilo (neobvezno)</label>
             <textarea id="sporocilo" name="sporocilo" placeholder="Popusti, posebne želje, vprašanja ..."></textarea>
           </div>
+          <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0">
           <button type="submit" class="btn submit">Pošlji prijavo</button>
-          <p class="form-note">S prijavo se strinjaš, da te kontaktiramo glede delavnice. Tvojih podatkov ne delimo z nikomer.</p>
+          <p class="form-note">S prijavo se strinjaš, da te kontaktiramo glede delavnice. Več o obdelavi podatkov v <a href="/zasebnost.html" style="color:#FFF1E4;text-decoration:underline">politiki zasebnosti</a>.</p>
         </form>
         <div class="form-msg" id="formMsg"></div>
       </div>
@@ -504,15 +518,47 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© <span id="year"></span> Bač.art — Blaž Bačar</span>
-      <span>Kreativne delavnice 2026 · Posestvo Bačarovnija</span>
+      <span>© <span id="year"></span> Bač.art — Blaž Bačar · Kreativne delavnice 2026</span>
+      <span><a href="/zasebnost.html">Politika zasebnosti</a> · <a href="#" id="cookieManage">Nastavitve piškotkov</a></span>
     </div>
   </div>
 </footer>
 
+<!-- COOKIE CONSENT -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Obvestilo o piškotkih">
+  <p>Ta spletna stran uporablja piškotke za anonimno analitiko obiska (Google Analytics), da jo lahko izboljšujemo. Analitični piškotki se naložijo <strong>le z vašim soglasjem</strong>. Več v <a href="/zasebnost.html">politiki zasebnosti</a>.</p>
+  <div class="cookie-actions">
+    <button class="cookie-accept" id="cookieAccept">Sprejmem</button>
+    <button class="cookie-reject" id="cookieReject">Zavrnem</button>
+  </div>
+</div>
+
 <script>
   // year
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // cookie consent + consent-gated Google Analytics
+  (function(){
+    var KEY='bacart_cookie_consent';
+    var banner=document.getElementById('cookieBanner');
+    function loadGA(){
+      if(window.__gaLoaded) return; window.__gaLoaded=true;
+      var s=document.createElement('script'); s.async=true;
+      s.src='https://www.googletagmanager.com/gtag/js?id=G-3M0H6MJ3ZP';
+      document.head.appendChild(s);
+      window.dataLayer=window.dataLayer||[];
+      function gtag(){dataLayer.push(arguments);} window.gtag=gtag;
+      gtag('js', new Date());
+      gtag('config','G-3M0H6MJ3ZP');
+    }
+    var saved=null; try{saved=localStorage.getItem(KEY);}catch(e){}
+    if(saved==='accept'){ loadGA(); }
+    else if(saved!=='reject'){ banner.classList.add('show'); }
+    var a=document.getElementById('cookieAccept'), r=document.getElementById('cookieReject'), m=document.getElementById('cookieManage');
+    if(a) a.addEventListener('click',function(){ try{localStorage.setItem(KEY,'accept');}catch(e){} banner.classList.remove('show'); loadGA(); });
+    if(r) r.addEventListener('click',function(){ try{localStorage.setItem(KEY,'reject');}catch(e){} banner.classList.remove('show'); });
+    if(m) m.addEventListener('click',function(e){ e.preventDefault(); banner.classList.add('show'); });
+  })();
 
   // scroll reveal
   (function(){
