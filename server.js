@@ -1,9 +1,12 @@
 require('dotenv').config();
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const session = require('express-session');
 const db = require('./db');
 const { sendNotification } = require('./mailer');
+const content = require('./content');
+const { renderPage } = require('./render');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,7 +16,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'spremeni-me';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'bacarovnija-skrivnost-spremeni';
 
 app.set('trust proxy', 1);
-app.use(express.json());
+app.use(express.json({ limit: '12mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: SESSION_SECRET,
@@ -27,8 +30,15 @@ app.use(session({
   }
 }));
 
-// ---- public static site ----
-app.use(express.static(path.join(__dirname, 'public')));
+// ---- dynamic homepage (rendered from editable content) ----
+app.get('/', (req, res) => {
+  res.set('Cache-Control', 'no-cache');
+  res.send(renderPage(content.getContent()));
+});
+
+// ---- static assets ----
+app.use(express.static(path.join(__dirname, 'public'), { index: false }));
+app.use('/uploads', express.static(content.UPLOAD_DIR));
 
 // ---- public API: registration ----
 app.post('/api/register', async (req, res) => {
@@ -110,6 +120,51 @@ app.post('/api/registrations/:id/status', requireAuth, (req, res) => {
 app.post('/api/registrations/:id/delete', requireAuth, (req, res) => {
   db.deleteRegistration(parseInt(req.params.id, 10));
   res.json({ ok: true });
+});
+
+// ---- content editor (admin) ----
+app.get('/admin/vsebina', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'content.html'));
+});
+
+app.get('/api/content', requireAuth, (req, res) => {
+  res.json({ ok: true, content: content.getContent() });
+});
+
+app.post('/api/content', requireAuth, (req, res) => {
+  try {
+    const body = req.body && req.body.content ? req.body.content : req.body;
+    if (!body || typeof body !== 'object') return res.status(400).json({ error: 'Neveljavna vsebina.' });
+    const saved = content.saveContent(body);
+    res.json({ ok: true, content: saved });
+  } catch (err) {
+    console.error('[content save]', err);
+    res.status(500).json({ error: 'Napaka pri shranjevanju.' });
+  }
+});
+
+app.post('/api/content/reset', requireAuth, (req, res) => {
+  res.json({ ok: true, content: content.resetContent() });
+});
+
+app.post('/api/upload', requireAuth, (req, res) => {
+  try {
+    const { dataUrl, filename } = req.body || {};
+    if (!dataUrl) return res.status(400).json({ error: 'Ni slike.' });
+    const m = /^data:(image\/(png|jpe?g|webp|gif));base64,(.+)$/i.exec(dataUrl);
+    if (!m) return res.status(400).json({ error: 'Nepodprt format (uporabi JPG, PNG ali WEBP).' });
+    const ext = m[2].toLowerCase() === 'jpeg' ? 'jpg' : m[2].toLowerCase();
+    const buf = Buffer.from(m[3], 'base64');
+    if (buf.length > 8 * 1024 * 1024) return res.status(400).json({ error: 'Slika je prevelika (največ 8 MB).' });
+    let base = (filename || 'slika').toString().toLowerCase()
+      .replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'slika';
+    const name = base + '-' + Date.now() + '.' + ext;
+    fs.writeFileSync(path.join(content.UPLOAD_DIR, name), buf);
+    res.json({ ok: true, url: '/uploads/' + name });
+  } catch (err) {
+    console.error('[upload]', err);
+    res.status(500).json({ error: 'Napaka pri nalaganju slike.' });
+  }
 });
 
 app.listen(PORT, () => {

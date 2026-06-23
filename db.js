@@ -3,7 +3,8 @@
 const path = require('path');
 const fs = require('fs');
 
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'data', 'registrations.json');
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const DB_PATH = process.env.DB_PATH || path.join(DATA_DIR, 'registrations.json');
 fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 
 function readAll() {
